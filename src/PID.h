@@ -2,13 +2,13 @@
 #define PID_H
 
 class PID {
-public:
   /*
   * Errors
   */
   double p_error;
   double i_error;
   double d_error;
+  double ctePrevious;
 
   /*
   * Coefficients
@@ -17,30 +17,17 @@ public:
   double Ki;
   double Kd;
 
+public:
   /*
   * Constructor
   */
-  PID();
-
-  /*
-  * Destructor.
-  */
-  virtual ~PID();
-
-  /*
-  * Initialize PID.
-  */
-  void Init(double Kp, double Ki, double Kd);
+  PID(const double Kp, const double Ki, const double Kd);
 
   /*
   * Update the PID error variables given cross track error.
+  * Calculate the total PID error (= correction factor)
   */
-  void UpdateError(double cte);
-
-  /*
-  * Calculate the total PID error.
-  */
-  double TotalError();
+  double step(double cte);
 };
 
 #endif /* PID_H */
